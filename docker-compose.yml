@@ -2,7 +2,7 @@ version: '2'
 
 services:
   db:
-    image: mysql:latest
+    image: mysql:5.7
     volumes:
      - db_data:/var/lib/mysql
     restart: always
@@ -11,6 +11,16 @@ services:
       MYSQL_DATABASE: root
       MYSQL_USER: root
       MYSQL_PASSWORD: root
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - '8080:80'
 
   web:
     depends_on:
